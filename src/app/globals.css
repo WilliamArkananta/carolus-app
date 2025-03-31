@@ -1,26 +1,37 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@plugin "daisyui/theme" {
+  name: "Carolus-app";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(0.98 0 0);
+  --color-base-200: oklch(0.95 0 0);
+  --color-base-300: oklch(0.9 0 0);
+  --color-base-content: oklch(0 0 0);
+  --color-primary: oklch(0.45 0.1324 251.21);
+  --color-primary-content: oklch(1 0 0);
+  --color-secondary: oklch(0.58 0.1711 292.17);
+  --color-secondary-content: oklch(98% 0.014 180.72);
+  --color-accent: oklch(0.78 0.1269 57.86);
+  --color-accent-content: oklch(42% 0.095 57.708);
+  --color-neutral: oklch(0.36 0.0154 285.61);
+  --color-neutral-content: oklch(98% 0.003 247.858);
+  --color-info: oklch(0.78 0.1003 238.68);
+  --color-info-content: oklch(0.45 0.1324 251.21);
+  --color-success: oklch(0.67 0.1624 144.21);
+  --color-success-content: oklch(98% 0.031 120.757);
+  --color-warning: oklch(0.88 0.1348 86.06);
+  --color-warning-content: oklch(55% 0.135 66.442);
+  --color-error: oklch(0.61 0.2082 22.24);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 0.5rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.28125rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
