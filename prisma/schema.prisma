@@ -7,17 +7,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  fullName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
 model Product {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  kodeBarang  String
+  productId   String   @unique // Kode unik untuk barang
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   deskripsi   String
   hargaBarang Int
-  kategori    String
+  kategori    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String   @db.ObjectId // Menyesuaikan tipe data foreign key
   nama        String
   stok        Int
   unit        String
-  updatedAt   DateTime @updatedAt
+  items       Item[]
 
   @@map("products")
+}
+
+model Order {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  namaPembeli   String
+  ruangan       String
+  items         Item[]
+  totalHarga    Int
+  paymentMethod String
+  status        String       @default("pending")
+  transaction   Transaction? // Tidak pakai `@relation` di sini untuk menghindari duplikasi
+  transactionId String?      @db.ObjectId
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+  name      String
+  quantity  Int
+  price     Int
+}
+
+model Transaction {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  order         Order    @relation(fields: [orderId], references: [id])
+  orderId       String   @unique @db.ObjectId
+  amount        Int
+  paymentMethod String
+  status        String   @default("unpaid")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Category {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String    @unique
+  products Product[]
 }
